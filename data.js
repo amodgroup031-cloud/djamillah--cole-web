@@ -16,7 +16,7 @@ const LEVELS = [
  { id:1, name:'Primaire', ar:'المرحلة الابتدائية', color:'#0B6B4F',
    desc:'Lire, écrire, prononcer et construire tes premières phrases. Lire la Fâtiha.',
    lessons:[
-   { id:'1-1', title:'Lettres, voyelles et premières phrases', ar:'الحُرُوفُ وَالحَرَكَاتُ', video:'@videos/n1-l1.mp4',
+   { id:'1-1', title:'Lettres, voyelles et premières phrases', ar:'الحُرُوفُ وَالحَرَكَاتُ', video:'@videos/n1-l1-v2.mp4',
      intro:'Les 28 lettres, les voyelles, la phrase هَذَا كِتَابٌ, l’article الـ, puis la Basmala et la Fâtiha.',
      sections:[
       {h:'1. L’alphabet arabe (28 lettres)', html:`<p>L’arabe s’écrit et se lit <b>de droite à gauche</b>. Il y a 28 lettres, presque toutes des consonnes. Touche une lettre pour l’agrandir.</p><div class="letters">${LETTERS.map(l=>`<button class="letter" data-l="${l[0]}" data-n="${l[1]}" data-s="${l[2]}"><span class="ar">${l[0]}</span><small>${l[1]}</small></button>`).join('')}</div>`+NOTE('Les lettres <b>ح ع خ غ ق</b> viennent de la gorge : ce sont elles qu’il faut le plus travailler.')},
