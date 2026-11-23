@@ -132,13 +132,14 @@ function renderLesson(id){
   if(!S.lessons[id]){S.lessons[id]={best:null,attempts:0,opened:today()};save();}
   const added=addVocab(x.vocab,id);
   let html=`<span class="badge">Niveau ${lv.id} · ${lv.name}</span><h1 class="mt8">${esc(x.title)}</h1><div class="ar" style="font-size:24px;color:var(--g);margin-top:-8px">${x.ar}</div><p class="muted">${esc(x.intro)}</p>`;
-  if(x.video)html+=`<div class="video-box"><video id="lvid" controls playsinline preload="metadata" src="${x.video}"></video><div class="video-ph" id="vph" hidden><div class="play">▶</div><b>Vidéo de la leçon</b><small>Elle sera intégrée dans la prochaine mise à jour de l’application.</small></div></div>`;
+  const vsrc=x.video&&x.video[0]==='@'?((window.DE&&DE.remote)||'')+x.video.slice(1):x.video;
+  if(x.video)html+=`<div class="video-box"><video id="lvid" controls playsinline preload="metadata" src="${vsrc}"></video><div class="video-ph" id="vph" hidden><div class="play">📶</div><b>Vidéo de la leçon</b><small>Connecte-toi à internet pour regarder la vidéo, puis touche ici pour réessayer.</small></div></div><p class="muted" style="font-size:13px;margin-top:-4px">🎬 Regarde la vidéo en entier, puis relis le cours ci-dessous.</p>`;
   html+=x.sections.map(s=>`<div class="card sec"><h3>${esc(s.h)}</h3>${s.html}</div>`).join('');
   html+=`<div class="card"><h3>📝 Vocabulaire de la leçon</h3><p class="muted" style="margin:0 0 8px;font-size:13px">Ces mots sont dans ton cahier et reviendront dans la révision du jour.</p><div class="vocab-mini">${x.vocab.map(v=>`<div class="vm"><span class="ar">${v[0]}</span><small>${esc(v[2])}</small></div>`).join('')}</div></div>`;
   const p=S.lessons[id];
   html+=`<div class="sticky-foot"><button class="btn gold" data-go="#/exos/${id}">✍️ Faire les exercices (${x.exos.length})${p.best!=null?' · '+fmt(p.best)+'/20':''}</button></div>`;
   view.innerHTML=html;
-  const v=$('#lvid');if(v){v.addEventListener('error',()=>{v.hidden=true;$('#vph').hidden=false;});const src=document.createElement('source');}
+  const v=$('#lvid');if(v){v.addEventListener('error',()=>{v.hidden=true;$('#vph').hidden=false;});$('#vph').onclick=()=>{$('#vph').hidden=true;v.hidden=false;v.load();};}
   view.querySelectorAll('.letter').forEach(b=>b.onclick=()=>modal(`<div class="modal-big ar">${b.dataset.l}</div><h2 class="center" style="margin:0">${b.dataset.n}</h2><p class="center muted">Son : ${esc(b.dataset.s)}</p><div class="ar center" style="font-size:34px;color:var(--g)">${b.dataset.l}َ  ${b.dataset.l}ِ  ${b.dataset.l}ُ</div><p class="center muted">avec fatha, kasra, damma</p><button class="btn" data-close>Fermer</button>`));
   if(added)toast(`${added} mots ajoutés à ton cahier`);
 }
